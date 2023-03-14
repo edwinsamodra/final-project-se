@@ -1,0 +1,55 @@
+Nama : Edwin Samodra Pratama
+ID Camp : BE4856996
+Pseudocode : Library App (Proses Peminjaman dan Pengembalian)
+
+START
+  DECLARE logged_in, registeredUser, userChoice
+  DECLARE desiredBook, borrowedBook
+  DECLARE booksInLibrary
+  DECLARE rental_date, rental_return_date, deadline
+
+  OUTPUT "Hi! Welcome to LibraryApp. Please log in or registerto access our book in the library!"
+  IF (logged_in == FALSE) THEN
+    IF (registeredUser == TRUE) THEN
+      LOGIN()
+    ELSE
+      REGISTER()
+    END IF
+  ELSE
+    REPEAT
+      OUTPUT "Hello ${registeredUser.name}!"
+      OUTPUT "Can I help you today? Would you like to borrow the book or return it to us?"
+      OUTPUT "1. BORROW A BOOK; 2. RETURN A BOOK; 0. EXIT"
+      INPUT userChoice
+      IF(userChoice == 1) THEN
+        OUTPUT "Type in the book you want:"
+        INPUT desiredBook
+        IF (booksInLibrary.name CONTAINS desiredBook AND booksInLibrary.quantity > 0) THEN
+            OUTPUT "Yeay! The book with title 'booksInLibrary.name' is available. The loan period is about one week."
+            borrowedBook = desiredBook
+            rental_date = DATE_NOW
+            deadline = DATE_NOW + 7 day
+            booksInLibrary.quantity -= 1
+        ELSE
+            OUTPUT "Sorry, The book is not found or not available right now. Please check another book."
+      ELSE IF (userChoice == 2) THEN
+        IF (SEARCH(borrowedBook, booksInLibrary.name) == "FOUND") THEN
+          OUTPUT "The Book is found in our database!"
+          booksInLibrary.quantity += 1
+          borrowedBook = ""
+          deadline = ""
+          rental_return_date = DATE_NOW
+        ELSE
+          OUTPUT "The Book is not found in our database!"
+        END IF
+        IF (DATE_NOW > deadline) THEN
+          OUTPUT "Woah! You have returned the book and exceeded the deadline, you will be fined!"
+        ELSE
+          OUTPUT "Good! You have returned the book and not exceeded the deadline."
+          OUTPUT "Thank you for borrowing our book."
+        END IF
+      END IF
+
+    UNTIL (userChoice == 0)
+      OUTPUT "Thanks for believing us! See you later."
+END
